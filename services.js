@@ -5,8 +5,8 @@ var app = express();
 //database connection
 var connection = mysql.createConnection({
     host     : 'localhost',
-    user     : 'phpmyadmin',
-    password : 'root',
+    user     : 'root',
+    password : '',
     database:'PharmaDz'
 });
 connection.connect();
@@ -14,7 +14,7 @@ connection.connect();
 
 // server creation
 
-var server = app.listen(8082,function(){
+var server = app.listen(8083,function(){
     var host = server.address().address
     var port = server.address().port
 });
