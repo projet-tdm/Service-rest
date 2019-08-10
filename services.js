@@ -27,9 +27,9 @@ app.get('/getpharmacies/:ville',function(req,res){
     res.send(JSON.stringify(results));
 })
 });
-app.get('/getcommandes',function(req,res){  
-    var query = "select * from Commande";
-   connection.query(query,function(error,results){
+app.get('/getcommandes/:nss',function(req,res){  
+    var query = "select * from Commande where user=?";
+   connection.query(query,[req.params.nss],function(error,results){
     if (error) throw error;
     res.send(JSON.stringify(results));
 })
