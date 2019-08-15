@@ -48,4 +48,11 @@ app.put('/annuler/:id', function (req, res) {
         res.send(JSON.stringify(results));
     })
  });
+ app.get('/getpharmaciesGarde/',function(req,res){  
+    var query = "select * from Pharmacie where garde=1";
+   connection.query(query,function(error,results){
+    if (error) throw error;
+    res.send(JSON.stringify(results));
+})
+});
  
