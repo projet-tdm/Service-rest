@@ -21,7 +21,7 @@ def hello(passwd, tel):
         to=tel
     )
     """
-    return json.dumps(passwd + tel)
+    return json.dumps("mot de passe: "+passwd +" Téléphone: " +tel)
 
 if __name__ == "__main__":
     app.run(debug=True)
