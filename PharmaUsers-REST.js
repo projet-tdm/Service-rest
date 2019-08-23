@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
     password : '',
-    database:'Pharma'
+    database:'PharmaDz'
 });
 connection.connect();
 
@@ -39,7 +39,14 @@ app.post('/addUser',function(req,res){
     else{res.send(JSON.stringify("SUCCESS"));}
 })
 });
-
+app.post('/addDevice',function(req,res){  
+    var device=req.body
+    var query = "INSERT INTO Device (id,user) SELECT * FROM (SELECT ?, ?) AS tmp WHERE NOT EXISTS (SELECT id,user FROM Device WHERE id = ? and user=?) LIMIT 1;";
+   connection.query(query,[device.id, device.user,device.id, device.user],function(error,results){
+    if (error) { res.send(JSON.stringify("FAILURE"));}
+    else{res.send(JSON.stringify("SUCCESS"));}
+})
+});
 
 app.get('/getUserByTel/:tel',function(req,res){  
     var query = "select users.nss , users.nom , users.prenom , users.adresse , users.tel , users.mdp, users.new from  users where users.tel=?";

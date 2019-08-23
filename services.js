@@ -62,4 +62,10 @@ app.put('/annuler/:id', function (req, res) {
     res.send(JSON.stringify(results));
 })
 });
- 
+app.get('/getNotifications/:user',function(req,res){  
+    var query = "select * from Notification where user=?";
+   connection.query(query,[req.params.user],function(error,results){
+    if (error) throw error;
+    res.send(JSON.stringify(results));
+})
+});
