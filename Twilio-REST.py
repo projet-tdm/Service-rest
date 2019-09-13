@@ -22,4 +22,4 @@ def hello(passwd, tel):
     return json.dumps("mot de passe: "+passwd +" Téléphone: " +tel)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,host="0.0.0.0")
