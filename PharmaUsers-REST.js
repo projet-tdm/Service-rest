@@ -26,7 +26,7 @@ app.post('/alterUserPass',function(req,res){
     var user=req.body
     var query = "UPDATE `users` SET `mdp` = ?,`new` = ? WHERE `users`.`nss` = ?";
    connection.query(query,[user.mdp,user.new,user.nss ],function(error,results){
-    if (error) { res.send(JSON.stringify("FAILUREkaka"));}
+    if (error) { res.send(JSON.stringify("FAILURE"));}
     else{res.send(JSON.stringify("SUCCESS"));}
 })
 });
