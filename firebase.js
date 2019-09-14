@@ -1,4 +1,4 @@
-var FCM = require('fcm-node');
+var FCM = require('fcm-push');
 var MySQLEvents = require('mysql-events');
 var express = require("express");
 var mysql = require("mysql");
@@ -40,8 +40,7 @@ var watcher =mysqlEventWatcher.add(
                 //console.log(tockens);
 
               });
-              console.log(tockens);
-             // tockens[0]="fd2_4qRZYqI:APA91bGunTsoTnbisxbYxHYGm9SKWHzm0Qc-x5ouuggYOkOyzBg0gsPDRg2NCwSTqkYQnnTSfS7iaaq2sm0V45RqdUcOzrim1M9hLdbWJRorXlzl_xd4FdzGXmXlMXC8SZL8-UBybqjq" 	
+              // tockens[0]="fd2_4qRZYqI:APA91bGunTsoTnbisxbYxHYGm9SKWHzm0Qc-x5ouuggYOkOyzBg0gsPDRg2NCwSTqkYQnnTSfS7iaaq2sm0V45RqdUcOzrim1M9hLdbWJRorXlzl_xd4FdzGXmXlMXC8SZL8-UBybqjq" 	
               //console.log(tockens);
             var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
               /*to: 'cjXOpBchpxU:APA91bG4y6Gg2rHIaqycbjiPXksqwedne1Ic9_81iW4DFiMyTwZ2JmS6EE7qviudyw47edbmNFlhS-EpoZdZkzf27-G41YnyMMKRzJYK3pmk4TtKBaoiwfW-74k54n43SCLMcj4cyhRi'
@@ -55,20 +54,23 @@ var watcher =mysqlEventWatcher.add(
           };
           
           fcm.send(message,function(err, response){
+             var nb=0;
               if (err) 
               {
                   console.log("Something has gone wrong!",response);
               } 
               else 
-              {
+              {   nb=nb+1;
+                  if (nb==1){
                   console.log("Successfully sent with response: ");
-                 var query = "insert into Notification (commande,user,date) values(?,?,?)";
-                 var d=new Date();
-                  connection.query(query,[newRow.fields.numero, newRow.fields.user,d.toString()],function(error,results){
+                 var query = "insert into Notification (commande,user,date,vue,pharmacie,dateL) values(?,?,?,?,?,?)";
+                 var d=new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                  connection.query(query,[newRow.fields.numero, newRow.fields.user,d,1,newRow.fields.pharma,newRow.fields.date],function(error,results){
                    if (error) { console.log("no");}
-                   else{console.log("yes");}
+                   else{console.log("yes"+results.insertId);}
                })
               }
+            }
           }); 
                 
             

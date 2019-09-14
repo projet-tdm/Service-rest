@@ -14,7 +14,7 @@ connection.connect();
 
 // server creation
 
-var server = app.listen(8083,function(){
+var server = app.listen(8084,function(){
     var host = server.address().address
     var port = server.address().port
 });
@@ -55,6 +55,13 @@ app.put('/annuler/:id', function (req, res) {
         res.send(JSON.stringify(results));
     })
  });
+ app.put('/setVue/:id', function (req, res) {
+    var query="UPDATE Notification SET vue=0 where id=?";
+    connection.query(query,[req.params.id],function(error,results){
+        if (error) throw error;
+        res.send(JSON.stringify(results));
+    })
+ });
  app.put('/payer/:id', function (req, res) {
     var query="UPDATE Commande SET etat='P' where numero=?";
     connection.query(query,[req.params.id],function(error,results){
@@ -72,6 +79,13 @@ app.put('/annuler/:id', function (req, res) {
 app.get('/getNotifications/:user',function(req,res){  
     var query = "select * from Notification where user=?";
    connection.query(query,[req.params.user],function(error,results){
+    if (error) throw error;
+    res.send(JSON.stringify(results));
+})
+});
+app.get('/getCommande/:numero',function(req,res){  
+    var query = "select * from Commande where numero=?";
+   connection.query(query,[req.params.numero],function(error,results){
     if (error) throw error;
     res.send(JSON.stringify(results));
 })
